@@ -8,8 +8,8 @@ jobs:
   build:
     strategy:
       matrix:
-        java: [21] # Use Java 21
-        os: [ubuntu-latest, windows-latest] # Run on latest OS versions
+        java: [21]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -24,6 +24,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
+          cache: gradle
 
 # Why though
 #      - name: Make Gradle Wrapper executable

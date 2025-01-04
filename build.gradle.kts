@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     kotlin("jvm")
     id("fabric-loom")
@@ -10,13 +8,7 @@ plugins {
 group = property("maven_group")!!
 version = property("mod_version")!!
 
-repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-}
+repositories {}
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("minecraft_version")}")
@@ -27,12 +19,17 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
 }
 
-tasks {
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+    withSourcesJar()
+}
 
+tasks {
     processResources {
         inputs.property("version", project.version)
         filesMatching("fabric.mod.json") {
-            expand(getProperties())
             expand(mutableMapOf("version" to project.version))
         }
     }
@@ -41,38 +38,29 @@ tasks {
         from("LICENSE")
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                artifact(remapJar) {
-                    builtBy(remapJar)
-                }
-                artifact(kotlinSourcesJar) {
-                    builtBy(remapSourcesJar)
-                }
+    compileJava {
+        options.release.set(17)
+    }
+
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            artifact(tasks["remapJar"]) {
+                builtBy(tasks["remapJar"])
+            }
+            artifact(tasks["kotlinSourcesJar"]) {
+                builtBy(tasks["remapSourcesJar"])
             }
         }
-
-        // select the repositories you want to publish to
-        repositories {
-            // uncomment to publish to the local maven
-            // mavenLocal()
-        }
     }
 
-    kotlin {
-        jvmToolchain(17)
-    }
-
+    repositories {}
 }
-
-java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-}
-
-
-
-// configure the maven publication
