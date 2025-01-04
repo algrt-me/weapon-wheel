@@ -68,11 +68,11 @@ class WeaponWheelSlot(
 
         this.isSelected = selected
         if (selected) {
-            this.animationController.start(SlotAnimation.SCALE, 1.5f, 1.2f)
-            this.animationController.start(SlotAnimation.OPACITY, 1.5f, 0xF0.toFloat())
+            this.animationController.start(SlotAnimation.SCALE, 2.5f, 1.2f)
+            this.animationController.start(SlotAnimation.OPACITY, 2.5f, 0xF0.toFloat())
         } else {
-            this.animationController.start(SlotAnimation.SCALE, 1.5f, 1f)
-            this.animationController.start(SlotAnimation.OPACITY, 1.5f, 0xB0.toFloat())
+            this.animationController.start(SlotAnimation.SCALE, 2.5f, 1f)
+            this.animationController.start(SlotAnimation.OPACITY, 2.5f, 0xB0.toFloat())
         }
     }
 
