@@ -1,0 +1,9 @@
+.idea/
+.gradle/
+.fleet/
+.kotlin/
+.vscode/
+
+
+build/
+run/

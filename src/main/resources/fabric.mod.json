@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "weapon-wheel",
+  "version": "${version}",
+
+  "name": "Weapon Wheel",
+  "description": "Adds a weapon wheel to select any slot from the hotbar",
+  "authors": [
+    "Me!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/weapon-wheel/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "me.algrt.weaponwheel.WeaponWheelMod"
+      }
+    ]
+  },
+  "mixins": [
+    "weapon-wheel.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "fabric-language-kotlin": ">=${fabric_kotlin_version}"
+  }
+}
