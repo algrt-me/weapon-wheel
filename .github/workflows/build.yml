@@ -9,27 +9,16 @@ jobs:
     strategy:
       matrix:
         java: [21]
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout repository
+      - name: Checkout sources
         uses: actions/checkout@v4
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/actions/wrapper-validation@v3
-
-      - name: Setup JDK ${{ matrix.java }}
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ matrix.java }}
-          distribution: temurin
-          cache: gradle
-
-# Why though
-#      - name: Make Gradle Wrapper executable
-#        if: ${{ runner.os != 'Windows' }}
-#        run: chmod +x ./gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build with Gradle
         run: ./gradlew build
