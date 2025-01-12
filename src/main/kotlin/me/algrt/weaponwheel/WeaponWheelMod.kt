@@ -34,9 +34,9 @@ class WeaponWheelMod : ModInitializer {
                 return@register
 
             if (releaseMouseKey.isPressed) {
+                client.mouse.unlockCursor()
                 weaponWheel.setMousePosition(client.mouse.x, client.mouse.y)
                 weaponWheel.open()
-                client.mouse.unlockCursor()
             } else {
                 weaponWheel.close()
                 client.mouse.lockCursor()

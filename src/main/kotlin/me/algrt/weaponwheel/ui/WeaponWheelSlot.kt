@@ -8,7 +8,6 @@ import com.mojang.blaze3d.systems.RenderSystem
 import me.algrt.weaponwheel.animation.Animation
 import me.algrt.weaponwheel.animation.AnimationController
 import me.algrt.weaponwheel.animation.easeInQuad
-import me.algrt.weaponwheel.animation.linearEase
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.DrawContext
 import net.minecraft.client.render.BufferBuilder
@@ -101,7 +100,7 @@ class WeaponWheelSlot(
         matrices.scale(scaleAmount, scaleAmount, 1f)
 
         this.renderBackground(drawContext, delta)
-        this.renderItems(drawContext, delta)
+        this.renderItem(drawContext, delta)
 
         matrices.pop()
     }
@@ -139,7 +138,7 @@ class WeaponWheelSlot(
         matrices.pop()
     }
 
-    private fun renderItems(drawContext: DrawContext, delta: Float) {
+    private fun renderItem(drawContext: DrawContext, delta: Float) {
         val matrices = drawContext.matrices
         val client = MinecraftClient.getInstance()
         val stack = client.player?.inventory?.getStack(this.slotIndex)
